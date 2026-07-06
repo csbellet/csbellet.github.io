@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CV · Clément S. Bellet</title>
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <nav class="nav">
+    <a class="nav-name" href="index.html">Clément S. Bellet</a>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="publications.html">Publications</a>
+      <a href="cv.html" class="active">CV</a>
+      <a href="teaching.html">Teaching</a>
+      <a href="media.html">Media</a>
+      <a href="contact.html">Contact</a>
+    </div>
+  </nav>
+</header>
+
+<main>
+  <h1>Curriculum Vitae</h1>
+
+  <div id="cv-gate">
+    <form id="cv-form" class="cv-download-form">
+      <label for="cv-email" class="sr-only">Email</label>
+      <input type="email" id="cv-email" name="email" placeholder="your@email.com" required>
+      <button type="submit" class="button">Get CV (PDF) →</button>
+    </form>
+    <p class="cv-download-note">No spam &mdash; just so I know who's interested.</p>
+  </div>
+  <p id="cv-download-ready" class="hidden"><a class="button" href="assets/cv/detailed_resume.pdf" target="_blank" rel="noopener">Download full CV (PDF) →</a></p>
+
+  <h2>Positions</h2>
+  <table class="cv-table">
+    <tr><td class="year">2026–present</td><td>Associate Professor (with tenure), Erasmus School of Economics, Erasmus University Rotterdam</td></tr>
+    <tr><td class="year">2019–2025</td><td>Assistant Professor (Tenure Track), Erasmus University Rotterdam</td></tr>
+    <tr><td class="year">2017–2019</td><td>Postdoctoral Fellow, INSEAD, Fontainebleau</td></tr>
+    <tr><td class="year">2016–2017</td><td>Postdoctoral Fellow, Centre for Economic Performance, London School of Economics</td></tr>
+    <tr><td class="year">2014–2015</td><td>Visiting Scholar, UC Berkeley, Department of Economics</td></tr>
+    <tr><td class="year">2009–2010</td><td>Visiting Student, Columbia College</td></tr>
+  </table>
+
+  <h2>Education</h2>
+  <table class="cv-table">
+    <tr><td class="year">2012–2017</td><td>PhD in Economics, Sciences Po Paris</td></tr>
+    <tr><td class="year">2015–2016</td><td>GENES-CREST Doctoral Grant, INSEE Macroeconomics Lab</td></tr>
+    <tr><td class="year">2010–2012</td><td>Joint Master's in Economics (PhD track), École Polytechnique–ENSAE — Best Master Thesis 2012</td></tr>
+    <tr><td class="year">2007–2010</td><td>B.A. in Sciences &amp; Social Sciences, Sciences Po — highest honors (top 2%)</td></tr>
+  </table>
+
+  <h2>Other Experience</h2>
+  <table class="cv-table">
+    <tr><td class="year">2011</td><td>Temporary position, The World Bank (April–August)</td></tr>
+  </table>
+
+  <h2>Editorial &amp; Service</h2>
+  <p><strong>Referee for:</strong></p>
+  <p class="cv-referee"><em>Economics —</em> American Economic Review, Quarterly Journal of Economics, Review of Economic Studies, Journal of the European Economic Association, American Economic Journal: Applied Economics, Economic Journal, Journal of Public Economics, Journal of Urban Economics, Journal of Economic Behavior and Organization, Economica, Journal of Behavioral and Experimental Economics, The Economics of Transition, Journal of Housing Economics, Journal of Happiness Economics.</p>
+  <p class="cv-referee"><em>Marketing &amp; Management —</em> Management Science, Journal of Marketing Research, Journal of Consumer Research.</p>
+</main>
+
+<footer>
+  Erasmus School of Economics · Burgemeester Oudlaan 50, 3062 PA Rotterdam, Room E2-08 · <a href="mailto:bellet@ese.eur.nl">bellet@ese.eur.nl</a>
+</footer>
+
+<script>
+(function () {
+  // Set this to your Formspree endpoint, e.g. "https://formspree.io/f/xxxxyyyy"
+  var FORM_ENDPOINT = "https://formspree.io/f/xzdlwplb";
+  var CV_URL = "assets/cv/detailed_resume.pdf";
+  var STORAGE_KEY = "cvEmailSubmitted";
+
+  var gate = document.getElementById("cv-gate");
+  var ready = document.getElementById("cv-download-ready");
+  var form = document.getElementById("cv-form");
+
+  if (localStorage.getItem(STORAGE_KEY)) {
+    gate.classList.add("hidden");
+    ready.classList.remove("hidden");
+    return;
+  }
+
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+    var button = form.querySelector("button");
+    button.disabled = true;
+    button.textContent = "Sending…";
+
+    fetch(FORM_ENDPOINT, {
+      method: "POST",
+      headers: { Accept: "application/json" },
+      body: new FormData(form)
+    }).catch(function () {
+      // Never let a form/network hiccup block the download.
+    }).finally(function () {
+      localStorage.setItem(STORAGE_KEY, "1");
+      window.location.href = CV_URL;
+    });
+  });
+})();
+</script>
+
+</body>
+</html>
