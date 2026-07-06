@@ -266,5 +266,5 @@ footer {
 
 @media (max-width: 480px) {
   .hero { flex-direction: column; }
-  .hero img { width: 130px; height: auto; }
+  .hero img { width: 130px; height: auto; align-self: center; }
 }
